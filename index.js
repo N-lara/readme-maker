@@ -18,9 +18,62 @@
 var inquirer = require('inquirer');
 const fs = require('fs');
 
+console.log('README builder if you do not wish to have content in an area leave blank or type n/a')
+
 inquirer
   .prompt([
     /* Pass your questions in here */
+    {
+        type: 'input',
+        name: 'title',
+        message: 'what is your project title?',
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'a description of your project(motivation, why built, what does it solve)',
+      },
+      {
+        type: 'input',
+        name: 'installation',
+        message: 'how to install step by step',
+      },
+      {
+        type: 'input',
+        name: 'usage',
+        message: 'instructions and examples of use',
+      },
+      {
+        type: 'input',
+        name: 'credits',
+        message: 'who collaborated on this project, also and third party assets used',
+      },
+      {
+        type: 'input',
+        name: 'license',
+        message: 'what license are you using?',
+      },
+     
+      {
+        type: 'input',
+        name: 'badgeContent',
+        message: 'badge content: first%20part-second%20part(optional)-(color hex or js color):',
+      },
+      {
+        type: 'input',
+        name: 'features',
+        message: 'list features here:',
+      },
+      {
+        type: 'input',
+        name: 'contribute',
+        message: 'how others can contribute:',
+      },
+      {
+        type: 'input',
+        name: 'tests',
+        message: 'write tests for app:',
+      }
   ])
   .then((answers) => {
     // Use user feedback for... whatever!!
