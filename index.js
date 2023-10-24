@@ -18,6 +18,64 @@
 var inquirer = require('inquirer');
 const fs = require('fs');
 
+function readmeMaker(answers){
+const readmeContent = (
+`# ${answers.title}  
+  
+## Description
+  
+${answers.description}
+  
+## Table of Contents
+  
+${answers.contents}
+  
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+- [Badges](#badges)
+- [Features](#features)
+- [How to Contribute](#how to contribute)
+- [Tests](#tests)
+  
+## Installation
+  
+${answers.installation}
+  
+## Usage
+  
+${answers.usage}
+  
+![website screenshot](assets/images/screenshot.png)
+  
+## Credits
+  
+${answers.credits}
+  
+## License
+  
+${answers.license}
+  
+## Badges
+  
+${answers.badges}
+  
+## Features
+  
+${answers.features}
+  
+## How to Contribute
+  
+${answers.contribute}
+  
+## Tests
+  
+${answers.tests}`
+);
+return readmeContent;
+};
+
 console.log('README builder if you do not wish to have content in an area leave blank or type n/a')
 
 inquirer
@@ -57,7 +115,7 @@ inquirer
       {
         type: 'input',
         name: 'badgeContent',
-        message: 'badge content: first%20part-second%20part(optional)-(color hex or js color):',
+        message: 'badge content(if>1 space between): first%20part-second%20part(optional)-(color name or hex):',
       },
       {
         type: 'input',
@@ -77,6 +135,8 @@ inquirer
   ])
   .then((answers) => {
     // Use user feedback for... whatever!!
+    console.log(answers);
+    console.log(readmeMaker(answers));
   })
   .catch((error) => {
     if (error.isTtyError) {
