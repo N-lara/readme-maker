@@ -2,26 +2,30 @@ import inquirer from './node_modules/inquirer/lib/inquirer.js';
 
 import fs from "fs";
 
-function makeBadges(){
-  for(let i =0; i < badgeArray.length; i++){
-    let badgeString = '';
-    badgeString += ('![badge](https://img.shields.io/badge/'+badgeArray[i]+') ')
+function makeBadges(badgeArray){
+  console.log(badgeArray);
+  consolSe.log('L'+badgeArray.length);
+  let badgeString = '';
+  for(let i = 0; i < badgeArray.length; i++){
+    console.log('i'+i);
+    badgeString += `![badge](https://img.shields.io/badge/${badgeArray[i]})
+`
+    console.log(badgeString);
   }
+  return badgeString;
 }
 
 function readmeMaker(answers){
 const readmeContent = (
 `# ${answers.title}
 
-![badge](https://img.shields.io/badge/license-${answers.license}-00ff00) 
+![badge](https://img.shields.io/badge/license-${answers.license.replace(/\s+/g, '')}-00ff00) 
    
 ## Description  
   
 ${answers.description}  
   
-## Table of Contents  
-  
-${answers.contents}  
+## Table of Contents   
   
 - [Installation](#installation)  
 - [Usage](#usage)  
@@ -52,7 +56,7 @@ ${answers.license}
   
 ## Badges  
   
-![badge](https://img.shields.io/badge/${answers.badgeContent})  
+${answers.badgeContent}  
   
 ## Features  
   
@@ -148,8 +152,10 @@ inquirer
     // console.log(answers);
     // console.log(readmeMaker(answers));
     const badgeArray = answers.badgeContent.split(' ')
+    const badgeString = makeBadges(badgeArray);
+    answers.badgeContent = badgeString
     fs.writeFile('README.md',readmeMaker(answers), (err)=>
-    err? console.log(err) : console.log('success!')
+    err? console.log(err) : console.log('success! Please proofread your README!')
     );
   })
   .catch((error) => {
