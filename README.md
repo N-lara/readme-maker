@@ -14,7 +14,7 @@ i created this app so that i can make professional readme files quickly.
 - [License](#license)  
 - [Badges](#badges)  
 - [Features](#features)  
-- [How to Contribute](#how to contribute)  
+- [How to Contribute](#how-to-contribute)  
 - [Tests](#tests)  
   
 ## Installation  
@@ -47,7 +47,7 @@ this program can prompt you for all the info it needs to create you a profession
   
 ## How to Contribute  
   
-in the future it would be cool if we could add a checkbox that asks what parts you want to use and then omit the parts you dont, also fixing table of contents issue with how to contribute
+in the future it would be cool if we could add a checkbox that asks what parts you want to use and then omit the parts you dont
   
 ## Tests  
   

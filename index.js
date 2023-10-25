@@ -33,7 +33,7 @@ ${answers.description}
 - [License](#license)  
 - [Badges](#badges)  
 - [Features](#features)  
-- [How to Contribute](#how to contribute)  
+- [How to Contribute](#how-to-contribute)  
 - [Tests](#tests)  
   
 ## Installation  
