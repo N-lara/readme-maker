@@ -1,77 +1,80 @@
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for information about my application repository
-// THEN a high-quality, professional README.md is generated with the title of my project and sections entitled Description, Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions
-// WHEN I enter my project title
-// THEN this is displayed as the title of the README
-// WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions
-// THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-// WHEN I choose a license for my application from a list of options
-// THEN a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-// WHEN I enter my GitHub username
-// THEN this is added to the section of the README entitled Questions, with a link to my GitHub profile
-// WHEN I enter my email address
-// THEN this is added to the section of the README entitled Questions, with instructions on how to reach me with additional questions
-// WHEN I click on the links in the Table of Contents
-// THEN I am taken to the corresponding section of the README
-// https://www.npmjs.com/package/inquirer/v/8.2.4
+import inquirer from './node_modules/inquirer/lib/inquirer.js';
 
-var inquirer = require('inquirer');
-const fs = require('fs');
+import fs from "fs";
+
+function makeBadges(badgeArray){
+  console.log(badgeArray);
+  consolSe.log('L'+badgeArray.length);
+  let badgeString = '';
+  for(let i = 0; i < badgeArray.length; i++){
+    console.log('i'+i);
+    badgeString += `![badge](https://img.shields.io/badge/${badgeArray[i]})
+`
+    console.log(badgeString);
+  }
+  return badgeString;
+}
 
 function readmeMaker(answers){
 const readmeContent = (
-`# ${answers.title}  
+`# ${answers.title}
+
+![badge](https://img.shields.io/badge/license-${answers.license.replace(/\s+/g, '')}-00ff00) 
+   
+## Description  
   
-## Description
+${answers.description}  
   
-${answers.description}
+## Table of Contents   
   
-## Table of Contents
+- [Installation](#installation)  
+- [Usage](#usage)  
+- [Credits](#credits)  
+- [License](#license)  
+- [Badges](#badges)  
+- [Features](#features)  
+- [How to Contribute](#how to contribute)  
+- [Tests](#tests)  
   
-${answers.contents}
+## Installation  
   
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-- [Badges](#badges)
-- [Features](#features)
-- [How to Contribute](#how to contribute)
-- [Tests](#tests)
+${answers.installation}  
   
-## Installation
+## Usage  
   
-${answers.installation}
+${answers.usage}  
   
-## Usage
+![website screenshot](assets/images/screenshot.png)  
   
-${answers.usage}
+## Credits  
   
-![website screenshot](assets/images/screenshot.png)
+${answers.credits}  
   
-## Credits
+## License  
   
-${answers.credits}
+${answers.license}  
   
-## License
+## Badges  
   
-${answers.license}
+${answers.badgeContent}  
   
-## Badges
+## Features  
   
-${answers.badges}
+${answers.features}  
   
-## Features
+## How to Contribute  
   
-${answers.features}
+${answers.contribute}  
   
-## How to Contribute
+## Tests  
   
-${answers.contribute}
-  
-## Tests
-  
-${answers.tests}`
+${answers.tests}
+
+## Questions
+
+GitHub user name: ${answers.github}
+GitHub link: https://github.com/${answers.github}
+Email: ${answers.email}`
 );
 return readmeContent;
 };
@@ -99,17 +102,18 @@ inquirer
       {
         type: 'input',
         name: 'usage',
-        message: 'instructions and examples of use',
+        message: 'instructions and examples of usage',
       },
       {
         type: 'input',
         name: 'credits',
-        message: 'who collaborated on this project, also and third party assets used',
+        message: 'who collaborated on this project, also and third party assets used(credits)',
       },
       {
-        type: 'input',
+        type: 'list',
         name: 'license',
-        message: 'what license are you using?',
+        message: 'What license are you using?',
+        choices: ['Apache license 2.0', 'GNU General Public License v3.0', 'MIT', 'BSD 2-clause "Simplified" license', 'BSD 3-clause "New" or "Revised" license', 'Boost Software License 1.0', 'Creative Commons Zero v1.0 Universal', 'Eclipse Public License 2.0', 'GNU Affero General Public License v3.0', 'GNU General Public License v2.0', 'GNU Lesser General Public License v2.1', 'Mozilla Public License 2.0', 'The Unlicense'],
       },
      
       {
@@ -131,17 +135,35 @@ inquirer
         type: 'input',
         name: 'tests',
         message: 'write tests for app:',
+      },
+      {
+        type: 'input',
+        name: 'GitHub',
+        message: 'GitHub username:',
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: 'Email:',
       }
   ])
   .then((answers) => {
     // Use user feedback for... whatever!!
-    console.log(answers);
-    console.log(readmeMaker(answers));
+    // console.log(answers);
+    // console.log(readmeMaker(answers));
+    const badgeArray = answers.badgeContent.split(' ')
+    const badgeString = makeBadges(badgeArray);
+    answers.badgeContent = badgeString
+    fs.writeFile('README.md',readmeMaker(answers), (err)=>
+    err? console.log(err) : console.log('success! Please proofread your README!')
+    );
   })
   .catch((error) => {
     if (error.isTtyError) {
       // Prompt couldn't be rendered in the current environment
+      console.log('error:' + error);
     } else {
       // Something else went wrong
+      console.log('an unexpected error occurred');
     }
   });
